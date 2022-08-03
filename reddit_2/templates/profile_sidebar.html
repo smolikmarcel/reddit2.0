@@ -1,0 +1,83 @@
+<div class="col-3">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark shadow-lg side-bar">
+        
+            <div class="row subreddit_sidemenu">
+                <div class="col">
+                    <!--<svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                    -->
+                    <object class="shadow profile_img2" data="../../static/media/{{ current_user.img }}" type="image/png">
+                        <img src="{{ url_for('static', filename='img/default_profile_img.png') }}" alt="">
+                    </object>
+
+                    <!--
+                    <img src="../../static/img/{{ current_user.img }}" alt="{{ current_user.username }}">
+                    -->
+                    <h2 class="">{{ current_user.username }}</h2>
+                    
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+<!--
+            <hr>
+
+            <ul class="nav nav-pills flex-column mb-auto side-bar-nav">
+
+                    <li class="nav-item side-bar-nav-item">
+                        <a href="{{ url_for('subreddit_page', subreddit='dsd') }}" class="nav-link text-white" aria-current="page">
+                            
+
+                            <h2>Learn more</h2>
+                        </a>
+                    </li>
+            </ul>
+
+            <hr>-->
+
+        
+        <!--
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+        <span class="fs-4">Subreddits</span>
+        </a>-->
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto side-bar-nav">
+
+                <li class="nav-item side-bar-nav-item">
+                    <a href="{{ url_for('profile_home') }}" class="nav-link text-white {% if request.endpoint == 'profile_home' %} active {% endif %}" aria-current="page">
+                        <!--<svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                        -->
+
+                        <h2>profile</h2>
+                    </a>
+                </li>
+
+                <li class="nav-item side-bar-nav-item">
+                    <a href="{{ url_for('profile_subreddits') }}" class="nav-link text-white {% if request.endpoint == 'profile_subreddits' %} active {% endif %}" aria-current="page">
+                        <!--<svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                        -->
+
+                        <h2>Subreddits</h2>
+                    </a>
+                </li>
+
+                <li class="nav-item side-bar-nav-item">
+                    <a href="{{ url_for('profile_submissions') }}" class="nav-link text-white {% if request.endpoint == 'profile_submissions' %} active {% endif %}" aria-current="page">
+                        <!--<svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                        -->
+
+                        <h2>Submmissions</h2>
+                    </a>
+                </li>
+
+                <hr>
+
+                <li class="nav-item side-bar-nav-item">
+                    <a href="{{ url_for('logout_page') }}" class="nav-link text-white  " aria-current="page">
+                        <!--<svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                        -->
+
+                        <h2>Sign out</h2>
+                    </a>
+                </li>
+        </ul>
+    </div>
+</div>

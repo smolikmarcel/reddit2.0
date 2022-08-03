@@ -1,0 +1,10 @@
+{% for row in submissions %}  
+    <a class="live-search-item link-unstyled" href="{{ url_for('submission_page', submission=row.id) }}">
+        
+        <div>
+            <h6>{{ row.title }}</h6>
+            <p>{{ row.created_at }}</p>
+        </div>
+    </a>
+                   
+{% endfor %} 

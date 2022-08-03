@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Learn more
+{% endblock %}
+
+{% block billboard %}
+        {% if current_subreddit %}
+          <div class="row py-lg-5" id="billboard">
+            <div class="col-lg-6 col-md-8 mx-auto" >
+              <h1 class="fw-light">{{ current_subreddit.display_name }}</h1>
+              <p class="lead text-muted">{{ current_subreddit.public_description|safe }}</p>
+              
+            </div>
+          </div>
+        {% endif %} 
+{% endblock %}
+
+
+
+
+{% block body %}
+
+
+
+<main class="main">
+  
+    <div class="album py-5 bg-light">
+
+        <div class="container">
+            <div class="row">
+                
+                {% include 'sidebar.html' %}
+
+                <div class="col-9 container">
+            
+                    <div class=" row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card_container">
+
+                        
+                        <div class="card bg-light shadow submission_content">
+                            
+                            <h2>{{ current_subreddit.title }}</h2>
+                            <hr>
+                            <p>
+
+                                {{ current_subreddit.description }}
+                            </p>
+                            <hr>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  </main>
+  
+
+{% endblock %}

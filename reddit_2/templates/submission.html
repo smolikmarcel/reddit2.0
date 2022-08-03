@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Homepage
+{% endblock %}
+
+{% block billboard %}
+        {% if current_subreddit %}
+          <div class="row py-lg-5" id="billboard">
+            <div class="col-lg-6 col-md-8 mx-auto" >
+              <h1 class="fw-light">{{ current_subreddit.display_name }}</h1>
+              <p class="lead text-muted">{{ current_subreddit.public_description }}</p>
+              <p>
+                <!--<a href="{{ url_for('subreddit_learn_more_page', subreddit=current_subreddit.display_name) }}" class="btn btn-outline-primary my-2 shadow"> Learn more </a>
+                <a href="#" class="btn btn-secondary my-2">Secondary action</a>-->
+              </p>
+            </div>
+          </div>
+        {% endif %} 
+{% endblock %}
+
+
+{% block body %}
+
+
+
+<main class="main">
+  
+    <div class="album py-5 bg-light">
+
+        <div class="container">
+            <div class="row">
+                
+                {% include 'sidebar.html' %}
+
+                <div class="col-9 container">
+            
+                    <div class=" row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card_container">
+
+                        
+                        <div class="card bg-light shadow submission_content">
+                            
+                            <h2>{{ submission.title }}</h2>
+                            <hr>
+                            <img src="{{ submission.url }}" alt="">
+                            <p>{{ submission.selftext|safe }}</p>
+                            <hr>
+                            
+                            <div class="row">
+
+                              <div class="col-10"></div>
+                              
+                              {% if current_user.is_authenticated %}
+                                <div class="col-2 container-like">
+                                  <a>
+                                    <svg id="submission-like" xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-arrow-up-circle container-like-button {% if liked == 1 %} like-active {% endif %}" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                    </svg>
+                                  </a>
+
+                                  <h6 id="submission-value" class="container-like-value">{{ submission.score }}</h6>
+                                  <a>
+                                    <svg id="submission-dislike" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-down-circle container-like-button {% if liked == -1 %} dislike-active {% endif %}" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                    </svg>
+                                  </a>
+                                </div>
+                              {% else %}
+                                <div class="col-2 container-like">
+                                  <a href="{{ url_for('login_page') }}">
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-arrow-up-circle container-like-button" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                    </svg>
+                                  </a>
+
+                                  <h6 class="container-like-value">{{ submission.score }}</h6>
+                                  <a href="{{ url_for('login_page') }}">
+                                    <svg id="submission-dislike" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-down-circle container-like-button" viewBox="0 0 16 16">
+                                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                    </svg>
+                                  </a>
+                                </div>
+                              {% endif %}
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class=" row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card_container comments_block">
+
+                        
+                        <div class=" submission_content">
+                            
+
+                                <h3>Comments</h3>
+                                <hr>
+                                
+                                {% if current_user.is_authenticated %}
+                                  <div class=" coment-bottom bg-dark shadow-lg p-3 px-3 comment">
+                                    
+                                    <form method="POST"  class="">                                    <!--<img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38">
+                                      -->
+                                      {{ form.hidden_tag() }}
+                                      {{ form.current( type="hidden", value = current_user.id ) }}
+                                      {{ form.parrent( type="hidden", value = submission.id ) }}
+                                      <div class="form-floating mb-3">
+                                          {{ form.text(class="form-control rounded-3", placeholder="text") }}
+                                          {{ form.text.label() }}
+                                      </div>
+                                      <div class="form-floating">
+                                      {{ form.submit(class="w-100 mb-2 btn btn-lg rounded-3 btn-primary") }}
+                                      </div>
+                  
+                                    </form>
+                                  </div>
+                                {% endif %}
+                                
+
+                                {% for comment in comments_data %}
+                                    
+                                    
+                                    <div class="comments_block", style="margin-left: calc( {{ comment[0] }} * 84px);">
+                                        <div class="g-0 comments_block-card ">
+                                          <div class=" comments_block-card-img">
+                                            <object class="" data="../../static/media/{{ comment[1].author_ref.img }}" type="image/png">
+                                                <img class="shadow" src="{{ url_for('static', filename='img/default_profile_img.png') }}" alt="">
+                                            </object>
+                                          </div>
+                                          <div class="card shadow bg-dark comments_block-card-content speech-bubble">
+                                            <div class="card-body">
+                                              <div class="container"><h5 class="card-title">{{ comment[1].author_ref.username }}</h5></div>
+                                              <hr>
+                                              <div class="container"><p class="card-text">{{ comment[1].text|safe }}</p></div>
+                                              <hr>
+                                              <div class="comment_block-footer container row">
+
+                                                <div class="col-4">
+                                                <p class="card-text"><small class="">{{ comment[1].created_at }}</small></p>
+                                                </div>
+
+                                                <div class="col-6"></div>
+
+                                                {% if current_user.is_authenticated %}
+                                                  <div class="col-2 container-like">
+                                                    <a>
+                                                      <svg id="comment-like-{{ comment[1].id }}" xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-arrow-up-circle container-like-button {% if comment[2] == 1 %} like-active {% endif %}" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                                      </svg>
+                                                    </a>
+
+                                                    <h6 id="comment-value-{{ comment[1].id }}" class="container-like-value">{{ comment[1].score }}</h6>
+                                                    <a>
+                                                      <svg id="comment-dislike-{{ comment[1].id }}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-down-circle container-like-button {% if comment[2] == -1 %} dislike-active {% endif %}" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                                      </svg>
+                                                    </a>
+                                                  </div>
+                                                {% else %}
+                                                  <div class="col-2 container-like">
+                                                    <a href="{{ url_for('login_page') }}">
+                                                      <svg  xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-arrow-up-circle container-like-button" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                                      </svg>
+                                                    </a>
+
+                                                    <h6 class="container-like-value">{{ comment[1].score }}</h6>
+                                                    <a href="{{ url_for('login_page') }}">
+                                                      <svg id="submission-dislike" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-down-circle container-like-button" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                                      </svg>
+                                                    </a>
+                                                  </div>
+                                                {% endif %}
+
+                                                {% if current_user.is_authenticated %}{% else %}
+                                                <div class="col-5 mg-3"><a href="{{ url_for('login_page') }}" class="btn btn-outline-light me-2">Sign-in</a></div>
+                                                {% endif %}
+                                              </div>
+                                              
+                                            </div>
+                                            
+
+                                            
+                                            {% if current_user.is_authenticated %}
+                                            <form method="POST"  class="comment">     
+                                                {{ form.hidden_tag() }}
+                                                {{ form.current( type="hidden", value = current_user.id ) }}
+                                                {{ form.parrent( type="hidden", value = comment[1].id ) }}
+                                                <div class="form-floating mb-3">
+                                                    {{ form.text(class="form-control rounded-3", placeholder="text") }}
+                                                    {{ form.text.label() }}
+                                                </div>
+                                                <div class="form-floating">
+                                                {{ form.submit(class="w-100 mb-2 btn btn-lg rounded-3 btn-primary") }}
+                                                </div>
+                            
+                                            </form>
+
+                                            {% endif %}
+                                          </div>
+                                        </div>
+
+                                        
+                                      </div>
+                                {% endfor %}
+
+                                
+
+                                  
+                                
+                        </div>
+                    </div>
+                </div>
+      
+            </div>
+        </div>
+    </div>
+  
+  </main>
+  
+
+{% endblock %}

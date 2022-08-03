@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Profile submissions
+{% endblock %}
+
+{% block billboard %}
+{% endblock %}
+
+
+
+
+{% block body %}
+
+
+
+<main class="main">
+  
+    <div class="album py-5 bg-light">
+
+        <div class="container">
+            <div class="row">
+                
+                {% include 'profile_sidebar.html' %}
+
+                <div class="col-9 container ">
+            
+                    <div class=" row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card_container">
+
+                        
+                        <div class="card bg-light shadow submission_content">
+                            
+                            <div class="row">
+
+                                <div class="col-9">
+                                    <h2>Submisssions</h2>
+                                </div>
+                                <div class="col-3">
+                                    <a class="btn btn-success w-100 mb-2 btn btn-lg rounded-3" href="{{ url_for('profile_new_submission') }}" role="button">Create submission</a>
+                                </div>
+                            </div>
+                            <hr>
+
+                            {% for submission in current_user.submissions %}
+
+                                <form method="POST" enctype="multipart/form-data" class="">
+                                    
+                                    <div class="row g-3">
+                                    {{ form.hidden_tag() }}
+                                    {{ form.id( type="hidden", value = submission.id ) }}
+
+
+
+                                    <div class="col-12">
+                                    {{ form.title.label(class="form-label") }}
+                                    {{ form.title(class="form-control rounded-3", placeholder="", value=submission.title) }}
+                                    </div>
+
+                                    
+                                        <div class="form-group col-md-4">
+                                            <label class="form-label" for="">Subreddit</label>
+                                            <p>{{ submission.subreddit }}</p>
+                                        </div>
+                                    
+                                    <div class="col-12">
+                                    {{ form.selftext.label(class="form-label") }}
+                                    <textarea class="form-control rounded-3" id="selftext" name="selftext">{{ submission.selftext }}</textarea>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                    {{ form.url.label(class="form-label") }}
+                                    {{ form.url(class="form-control rounded-3", placeholder="www.example.com", value=submission.url) }}
+                                    </div>
+
+                                    
+                                    <div class="col-8"></div>
+                                    <div class="col-2">
+                                        {{ delete.hidden_tag() }}
+                                        {{ delete.id( type="hidden", value = submission.id ) }}
+                                        {{ delete.submit(class="w-100 mb-2 btn btn-lg rounded-3 btn-danger") }}                                
+                                        </div>
+                                    <div class="col-2">
+                                    {{ form.submit(class="w-100 mb-2 btn btn-lg rounded-3 btn-primary") }}                                
+                                    </div>
+
+                                    </div>
+                                </form>
+                                <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  </main>
+  
+
+{% endblock %}

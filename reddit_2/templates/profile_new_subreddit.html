@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Profile new subreddits
+{% endblock %}
+
+{% block billboard %}
+{% endblock %}
+
+
+
+
+{% block body %}
+
+
+
+<main class="main">
+  
+    <div class="album py-5 bg-light">
+
+        <div class="container">
+            <div class="row">
+                
+                {% include 'profile_sidebar.html' %}
+
+                <div class="col-9 container">
+            
+                    <div class=" row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card_container">
+
+                        
+                        <div class="card bg-light shadow submission_content">
+                            
+                            <h2>Create subreddit</h2>
+                            <hr>
+                            
+
+                            <form method="POST" enctype="multipart/form-data" class="">
+                                
+                                <div class="row g-3">
+                                {{ form.hidden_tag() }}
+
+                                <div class="col-12">
+                                {{ form.display_name.label(class="form-label") }}
+                                {{ form.display_name(class="form-control rounded-3", placeholder="") }}
+                                </div>
+                                
+                                <div class="col-12">
+                                {{ form.subreddit_logo.label(class="form-label") }}
+                                {{ form.subreddit_logo(class="form-control rounded-3", placeholder="subreddit logo") }}
+                                </div>
+                                
+                                <div class="col-12">
+                                {{ form.subreddit_img.label(class="form-label") }}
+                                {{ form.subreddit_img(class="form-control rounded-3", placeholder="subreddit img") }}
+                                </div>
+
+                                <div class="col-12">
+                                {{ form.description.label(class="form-label") }}
+                                {{ form.description(class="form-control rounded-3", placeholder="text ...") }}
+                                </div>
+
+                                <div class="col-12">
+                                {{ form.public_description.label(class="form-label") }}
+                                {{ form.public_description(class="form-control rounded-3", placeholder="text ...") }}
+                                </div>
+                                
+                                <div class="col-8"></div>
+                                <div class="col-2">
+                                    <a class="btn btn-secondary w-100 mb-2 btn btn-lg rounded-3" href="{{ url_for('profile_subreddits') }}" role="button">Discard</a>
+                                </div>
+                                <div class="col-2">
+                                {{ form.submit(class="w-100 mb-2 btn btn-lg rounded-3 btn-primary") }}                                
+                                </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  </main>
+  
+
+{% endblock %}
