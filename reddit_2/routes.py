@@ -50,7 +50,7 @@ def ajaxlivesearch():
         return jsonify({'htmlresponse': render_template('response.html', submissions=submissions)})
 
 
-@app.route("/ajaxsubscriber",methods=["POST","GET"])
+@app.route("/ajaxsubscribers",methods=["POST","GET"])
 def ajaxsubscribers():
     
     if request.method == 'POST':
